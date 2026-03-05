@@ -22,7 +22,7 @@ return Nil
 Static Function MenuDef()
    Local aRotina := {} //Variavel de Rotina
 
-   //Opções do Menu, Ex:
+   //Opções do Menu, Ex: MVC
     ADD OPTION aRotina TITLE "Visualizar" ACTION "VIEWDEF.PRODUTO" OPERATION 1 ACCESS 0
     ADD OPTION aRotina TITLE "Incluir" ACTION "VIEWDEF.PRODUTO" OPERATION 3 ACCESS 0
     ADD OPTION aRotina TITLE "Alterar" ACTION "VIEWDEF.PRODUTO" OPERATION 4 ACCESS 0
