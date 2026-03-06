@@ -133,3 +133,10 @@ Static Function Valida(nOperation,nRecAtual,cDesc,cArtCod,cCod)
       endif
     endif
 Return lExist
+//Função de mensagem de erro
+Static Function ShowError(oModel)
+    oModel:setErrorMessage(,,, , ,;
+        "Duplicidade Detectada",;
+        "Este registro (Título/Álbum ou Código) já existe no sistema.",;
+        "Por favor, verifique os dados antes de salvar.", , , )
+Return .F.

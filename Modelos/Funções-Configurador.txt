@@ -1,0 +1,1 @@
+Posicione("SX5", 1, xFilial("SX5") + 00 + M->ZZM_GN, "X5_DESCRI")

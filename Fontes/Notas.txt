@@ -7,6 +7,11 @@ Parametros
 ( ) Impedem associação caso não exista cadastros
 Ex:
  Sem cantor em ZZC não é possivel registrar um Album 
-( ) Impedem Duplicidade de Informação
-Ex:
- Não pode Musicas com o mesmo titulo no mesmo album
+
+CheckList
+  ( ) Consegue incluir e consultar registros manualmente nas tabelas sem erro.
+  ( ) Índices permitem DBSeek rápido (testar busca por código e por chaves compostas).
+  ( ) Consulta padrão retorna registros esperados e será reutilizável nos cadastros.
+  ( ) Parâmetros e gatilhos estão ativos e impedem dados inválidos.
+
+  DbHeaver - Acesser de BD

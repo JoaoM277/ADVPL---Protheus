@@ -22,7 +22,7 @@ return Nil
 Static Function MenuDef()
    Local aRotina := {} //Variavel de Rotina
 
-   //OpÁıes do Menu, Ex:
+   //Op√ß√µes do Menu, Ex:
     ADD OPTION aRotina TITLE "Visualizar" ACTION "VIEWDEF.ALBUNS" OPERATION 1 ACCESS 0
     ADD OPTION aRotina TITLE "Incluir" ACTION "VIEWDEF.ALBUNS" OPERATION 3 ACCESS 0
     ADD OPTION aRotina TITLE "Alterar" ACTION "VIEWDEF.ALBUNS" OPERATION 4 ACCESS 0
@@ -38,9 +38,9 @@ Static Function ModelDef()
   Local bCommit := Nil
   Local bCancel := Nil
 
-  bCommit := {|oModel| fCommit(oModel)} //Chama a FunÁ„o de commit auxiliar
+  bCommit := {|oModel| fCommit(oModel)} //Chama a Fun√ß√£o de commit auxiliar
   //Cria o modelo de dados para o cadastro
-  oModel := MPFormModel():New("MODELMVC", bPre, bPos, bCommit, bCancel) // Aqui coloquei outro nome para nao dar algum tipo de conflito com a funÁ„o
+  oModel := MPFormModel():New("MODELMVC", bPre, bPos, bCommit, bCancel) // Aqui coloquei outro nome para nao dar algum tipo de conflito com a fun√ß√£o
   oModel :AddFields("MASTER", /*cOwner*/, oStruct) // Aqui coloquei "MASTER" os dev usa assim nos codigos
   oModel :SetDescription("Modelo de dados - " + cTitulo)
   oModel :GetModel("MASTER"):SetDescription( "Dados de - " + cTitulo)
@@ -53,7 +53,7 @@ Static Function ViewDef()
     Local oStruct := FWFormStruct(2, cAliasMVC)
     Local oView
 
-    //Cria a visualizaÁ„o do cadastro
+    //Cria a visualiza√ß√£o do cadastro
     oView := FWFormView():New()
     oView :SetModel(oModel)
     oView :AddField("VIEW_ALBUNS", oStruct, "MASTER")
@@ -62,7 +62,7 @@ Static Function ViewDef()
 
 Return oView
 
-//FunÁ„o para Commit
+//Fun√ß√£o para Commit
 /*/{Protheus.doc} fCommit
     (long_description)
     @type  Static Function
@@ -78,12 +78,12 @@ Return oView
 Static Function fCommit(oModel)
     Local nOperation := oModel:GetOperation()
     Local lRet       := .T.
-    Local cDesc      := oModel:GetValue("MASTER","ZZA_NOME") //Busca a descriÁ„o na tabela
+    Local cDesc      := oModel:GetValue("MASTER","ZZA_NOME") //Busca a descri√ß√£o na tabela
     Local cArtCod    := oModel:GetValue("MASTER","ZZA_ARTCOD") //Busca o codigo do Artista na tabela
     Local cCod       := oModel:GetValue("MASTER","ZZA_CD") //Busca o codigo do Registro nesse caso o album
     Local nRecAtual  := ZZA->(Recno()) //Guarda o local do ponteiro (onde o sistema ta lendo)
 
-    if nOperation == MODEL_OPERATION_INSERT .or. nOperation == MODEL_OPERATION_UPDATE //Retorna true caso a operaÁ„o seja de Criar ou de Editar registros, apenas
+    if nOperation == MODEL_OPERATION_INSERT .or. nOperation == MODEL_OPERATION_UPDATE //Retorna true caso a opera√ß√£o seja de Criar ou de Editar registros, apenas
       if Valida(nOperation, nRecAtual, cDesc, cArtcod, cCod)
        lRet := ShowError(oModel) 
       endif
@@ -114,7 +114,7 @@ Static Function Valida(nOperation,nRecAtual,cDesc,cArtCod,cCod)
     Local aArea  := ZZA->(GetArea())
 
     ZZA->(dbSetOrder(2))
-    if ZZA->(dbSeek(xFilial("ZZA")+cDesc+cArtCod)) //ValidaÁ„o de mesmo titulo com o mesmo codigo de cantor
+    if ZZA->(dbSeek(xFilial("ZZA")+cDesc+cArtCod)) //Valida√ß√£o de mesmo titulo com o mesmo codigo de cantor
       if nOperation==MODEL_OPERATION_INSERT .or. (ZZA->(Recno())!=nRecAtual)
        lExist := .T.
       endif
@@ -136,6 +136,6 @@ Return lExist
 Static Function ShowError(oModel)
     oModel:setErrorMessage(,,, , ,;
         "Duplicidade Detectada",;
-        "Este registro (TÌtulo/¡lbum ou CÛdigo) j· existe no sistema.",;
+        "Este registro (T√≠tulo/√Ålbum ou C√≥digo) j√° existe no sistema.",;
         "Por favor, verifique os dados antes de salvar.", , , )
 Return .F.
