@@ -98,4 +98,38 @@ Return NIL
     
  
 
+//Função de Validação fCommit
+//1 - Função auxiliar
+Static Function fCommit(oModel)
+    Local nOperation := oModel:GetOperation()
+    Local lRet       := .T.
+    Local cDesc      := oModel:GetValue("MASTER","ZZA_NOME") //Busca a descrição na tabela
+    Local cArtCod    := oModel:GetValue("MASTER","ZZA_ARTCOD") //Busca o codigo do Artista na tabela
+    Local cCod       := oModel:GetValue("MASTER","ZZA_CD") //Busca o codigo do Registro nesse caso o album
+    Local nRecAtual  := ZZA->(Recno()) //Guarda o local do ponteiro (onde o sistema ta lendo)
 
+    if nOperation == MODEL_OPERATION_INSERT .or. nOperation == MODEL_OPERATION_UPDATE //Retorna true caso a operação seja de Criar ou de Editar registros, apenas
+      if Valida(nOperation, nRecAtual, cDesc, cArtcod, cCod)
+       lRet := ShowError(oModel) 
+      endif
+
+      if lRet
+        Begin Transaction
+         lRet :=FWFormCommit(oModel)
+         End Transaction
+      endif
+
+    endif
+Return lRet
+//2 - Função Principal
+Static Function Valida(nOperation,nRecAtual,cDesc,cArtCod,cCod)
+    Local lExist := .F.
+    Local aArea  := ZZA->(GetArea())
+
+    ZZA->(dbSetOrder(2))
+    if ZZA->(dbSeek(xFilial("ZZA")+cDesc+cArtCod)) //Validação de mesmo titulo com o mesmo codigo de cantor
+      if nOperation==MODEL_OPERATION_INSERT .or. (ZZA->(Recno())!=nRecAtual)
+       lExist := .T.
+      endif
+    endif
+Return lExist

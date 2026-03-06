@@ -2,14 +2,15 @@
 #Include "fwmvcdef.ch"
 
 
-Static cTitulo := "Cadastro de Albuns"
+Static cAliasMVC := "ZZA"
+Static cTitulo := "Albuns"
 
 User Function ALBUNS()
     local aArea   := GetArea()
     local oBrowse
 
     oBrowse := FWMBrowse():New()
-    oBrowse:SetAlias("ZZA")
+    oBrowse:SetAlias(cAliasMVC)
     oBrowse:SetDescription(cTitulo)
     oBrowse:Activate()
        
@@ -30,94 +31,111 @@ Return aRotina
 
 //ModelDef
 Static Function ModelDef()
-  //Local oStruct := FWFormStruct(1, cAliasMVC)
-  Local oModel := Nil
-  Local oStpai := FWFormStruct(1, 'ZZA')
-  Local oStFilho := FWFormStruct(1, 'ZZM')
-  Local aZZMRel := {}
+  Local oStruct := FWFormStruct(1, cAliasMVC)
+  Local oModel
+  Local bPre := Nil
+  Local bPos := Nil
+  Local bCommit := Nil
+  Local bCancel := Nil
 
-  //Definição de Campos
-  //oObj:GetModel("SB1MASTER"):GetStruct():SetProperty("B1_COD", MODEL_FIELD_WHEN, FwBuildFeature(STRUCT_FEATURE_WHEN , ".F."))
-  oStpai: GetModel("ZZAMASTER"):GetStruct():SetProperty('ZZA_CD', MODEL_FIELD_VIEW, FwBuildFeature(STRUCT_FEATURE_WHEN, ".F."))
-  oStpai: SetProperty('ZZA_CD', MODEL_FIELD_INIT, FwBuildFeature(STRUCT_FEATURE_INIPAD, 'GetSXENum("ZZA","ZZA_CD")'))
-  oStpai: SetProperty('ZZA_ARTCOD', MODEL_FIELD_VALID, FwBuildFeature(STRUCT_FEATURE_VALID, 'ExistCpo("ZZC", M->ZZA_ARTCOD)'))
-  oStFilho: SetProperty('ZZM_ALBCOD', MODEL_FIELD_VIEW, FwBuildFeature(STRUCT_FEATURE_WHEN, ".F."))
-  oStFilho: SetProperty('ZZM_ALBCOD', MODEL_FIELD_OBRIGAT, .F.)
-  oStFilho: SetProperty('ZZM_ALBCOD', MODEL_FIELD_OBRIGAT, .F.)
-  oStFilho: SetProperty('ZZM_COD', MODEL_FIELD_INIT,    FwBuildFeature(STRUCT_FEATURE_INIPAD, 'u_zFCOD'))
-
-  //Relacionamentos
-  oModel := MPFormModel():New(ALBUNS)
-  oModel:AddField('ZZAMASTER',/*cOwner*/,oStpai)
-  oModel:AddGrid('ZZMDETAIL','ZZAMASTER',oStFilho,/*bLinePre*/,/*bLinePost*/,/*bPre - Grid Inteiro*/,/*bPos - Grid Inteiro*/,/*bLoad - Carga do Modelo*/)
-
-  //Fazendo Relacionamento Pai e filho
-  aAdd(aZZMRel, ('ZZM_FILIAL','ZZA_FILIAL'))
-  aAdd(aZZMRel, ('ZZM_ARTCOD','ZZA_ARTCOD'))
-  aAdd(aZZMRel, ('ZZM_ALBCOD','ZZA_CD'))
-
-
-  oModel:SetRelation('ZZMDETAIL', aZZMRel, ZZM ->(IndexKey(1)))
-  oModel:GetModel('ZZMDETAIL'):SetUniquieLine(('ZZM_DESC'))
-  oModel:SetPrimaryKey({})
-
-  //Descrição
-  oModel:SetDescription("Cadastro de Musicas")
-  oModel:GetModel('ZZAMASTER'):SetDescription("Album")
-  oModel:GetModel('ZZMDETAIL'):SetDescription("Faixas")
-  
+  bCommit := {|oModel| fCommit(oModel)} //Chama a Função de commit auxiliar
+  //Cria o modelo de dados para o cadastro
+  oModel := MPFormModel():New("MODELMVC", bPre, bPos, bCommit, bCancel) // Aqui coloquei outro nome para nao dar algum tipo de conflito com a função
+  oModel :AddFields("MASTER", /*cOwner*/, oStruct) // Aqui coloquei "MASTER" os dev usa assim nos codigos
+  oModel :SetDescription("Modelo de dados - " + cTitulo)
+  oModel :GetModel("MASTER"):SetDescription( "Dados de - " + cTitulo)
+  oModel :SetPrimaryKey({})
 Return oModel
 
 //ViewDef
 Static Function ViewDef() 
-  Local oView := Nil
-  Local oModel := FWLoadModel('ALBUNS')
-  Local oStpai := FWFormStruct(2, 'ZZA')
-  Local oStFilho := FWFormStruct(2, 'ZZM')
+    Local oModel := FWLoadModel("ALBUNS")
+    Local oStruct := FWFormStruct(2, cAliasMVC)
+    Local oView
 
     //Cria a visualização do cadastro
-    oView := FWFormVView():New()
-    oView:SetModel(oModel)
-
-    //Cabeçalho
-    oView:AddField('VIEW_ZZA', oStpai, 'ZZAMASTER')
-    oView:AddGrid('VIEW_ZZM', oStFilho, 'ZZMDETAIL')
-
-    //Dimensionamento de Tabelas
-    oView:CreateHorizontalBox('CABEC',30)
-    oView:CreateHorizontalBox('GRID',70)
-
-    //Amarrando a view com as Box
-    oView:SetOwnerView('VIEW_ZZA','CABEC')
-    oView:SetOwnerView('VIEW_ZZM','GRID')
-
-    //Setando Titulos
-    oView:EnableTitleView('VIEW_ZZA',"Cadastro de Albuns")
-    oView:EnableTitleView('VIEW_ZZM',"Faixas Musicais")
-
-    //Força o fechamento da janela na confirmação
-    oView:SetCloseOnOk({||.T.})
-
-    //Remove os Campos que não devem ser vistos
-    oStFilho:RemoveField('ZZM_ARTCOD')
-    oStFilho:RemoveField('ZZM_ALBCOD')
+    oView := FWFormView():New()
+    oView :SetModel(oModel)
+    oView :AddField("VIEW_ALBUNS", oStruct, "MASTER")
+    oView :CreateHorizontalBox("TELA" , 100)
+    oView :SetOwnerView("VIEW_ALBUNS", "TELA")
 
 Return oView
 
-User Function u_zFCOD()
-    Local aArea := GetArea()
-    //Local oCod := StrTran(Space(TamSX3('ZZM_COD'),{1}),'','0')
-    //Local oModelPad := oModelPad:GetModel("ZZMDETAIL")
-    //Local nOperacao := oModelPad:nOperation
-    Local nLineAtu := oModelGrid:nLine
-    Local nPosCod := aSoam(oModelGrid:aHeader, {|x| AllTrim(x[2]) == AllTrim("ZZM_COD")})
-    
-    If nLineAtu < 1
-       oCod := Soma1(oCod)
-    else
-        oCod := oModelGrid:aCols(nLineAtu)[nPosCod]
-        oCod := Soma1(oCod)
-    Endif
+//Função para Commit
+/*/{Protheus.doc} fCommit
+    (long_description)
+    @type  Static Function
+    @author user
+    @since 05/03/2026
+    @version version
+    @param oModel, param_type, param_descr
+    @return return_var, return_type, return_description
+    @example
+    (examples)
+    @see (links_or_references)
+/*/
+Static Function fCommit(oModel)
+    Local nOperation := oModel:GetOperation()
+    Local lRet       := .T.
+    Local cDesc      := oModel:GetValue("MASTER","ZZA_NOME") //Busca a descrição na tabela
+    Local cArtCod    := oModel:GetValue("MASTER","ZZA_ARTCOD") //Busca o codigo do Artista na tabela
+    Local cCod       := oModel:GetValue("MASTER","ZZA_CD") //Busca o codigo do Registro nesse caso o album
+    Local nRecAtual  := ZZA->(Recno()) //Guarda o local do ponteiro (onde o sistema ta lendo)
 
-    RestArea(aArea)
-Return oCod
+    if nOperation == MODEL_OPERATION_INSERT .or. nOperation == MODEL_OPERATION_UPDATE //Retorna true caso a operação seja de Criar ou de Editar registros, apenas
+      if Valida(nOperation, nRecAtual, cDesc, cArtcod, cCod)
+       lRet := ShowError(oModel) 
+      endif
+
+      if lRet
+        Begin Transaction
+         lRet :=FWFormCommit(oModel)
+         End Transaction
+      endif
+
+    endif
+Return lRet
+
+/*/{Protheus.doc} Valida
+    (long_description)
+    @type  Static Function
+    @author user
+    @since 05/03/2026
+    @version version
+    @param nOperation,nRecAtual,cDesc,cArtCod,cCod, param_type, param_descr
+    @return return_var, return_type, return_description
+    @example
+    (examples)
+    @see (links_or_references)
+/*/
+Static Function Valida(nOperation,nRecAtual,cDesc,cArtCod,cCod)
+    Local lExist := .F.
+    Local aArea  := ZZA->(GetArea())
+
+    ZZA->(dbSetOrder(2))
+    if ZZA->(dbSeek(xFilial("ZZA")+cDesc+cArtCod)) //Validação de mesmo titulo com o mesmo codigo de cantor
+      if nOperation==MODEL_OPERATION_INSERT .or. (ZZA->(Recno())!=nRecAtual)
+       lExist := .T.
+      endif
+    endif
+Return lExist
+
+/*/{Protheus.doc} ShowError
+    (long_description)
+    @type  Static Function
+    @author user
+    @since 05/03/2026
+    @version version
+    @param oModel, param_type, param_descr
+    @return return_var, return_type, return_description
+    @example
+    (examples)
+    @see (links_or_references)
+/*/
+Static Function ShowError(oModel)
+    oModel:setErrorMessage(,,, , ,;
+        "Duplicidade Detectada",;
+        "Este registro (Título/Álbum ou Código) já existe no sistema.",;
+        "Por favor, verifique os dados antes de salvar.", , , )
+Return .F.
