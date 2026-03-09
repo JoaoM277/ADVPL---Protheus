@@ -1,1 +1,10 @@
 Posicione("SX5", 1, xFilial("SX5") + 00 + M->ZZM_GN, "X5_DESCRI")
+POSICIONE("ZZM", 1, XFILIAL("ZZM") + M->ZZM_ALBCOD, "ZZA_NOME")  
+
+gatilhos:
+
+Auto preenchimento de descrição - (alias da descrição)->(campo da descrição)
+                                ex: ZZA->ZZA_NOME
+
+ZZA_ARTCOD, ZZA_NMC
+ZZA_GN, ZZA_GNDES

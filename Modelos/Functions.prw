@@ -140,3 +140,26 @@ Static Function ShowError(oModel)
         "Este registro (Título/Álbum ou Código) já existe no sistema.",;
         "Por favor, verifique os dados antes de salvar.", , , )
 Return .F.
+
+
+//Função de pesquisa com DBSeek
+
+User Function u_DBseek()
+
+  Local aArea := GetArea()
+  Local cInput := ""
+
+  
+  DbSelectArea('ZZC') //Seleciona a Tabela 
+  ZZA->(dbSetOrder(1)) //Seleciona o Indice Reeferencia
+
+  cInput := FWInputBox("Digite um código") //Recebe o Codigo pra pesquisa
+
+  If ZZC->(DbSeek(cInput + FWxFilial('ZZC')))
+    FWAlert("Registro encontrado: " + ZZC->ZZC_COD + " pesquisa funcionando")
+  else
+    FWAlert("Registro não encontrado, pesquisa falhou")
+  endif
+
+  RestArea(aArea)
+Return

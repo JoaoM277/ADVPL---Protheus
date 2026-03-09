@@ -1,17 +1,6 @@
-
-Validação
-( ) Verificar Paraamtros
-( ) Veriifcar Gatilhos
-
-Parametros
-( ) Impedem associação caso não exista cadastros
-Ex:
- Sem cantor em ZZC não é possivel registrar um Album 
-
-CheckList
-  (x) Consegue incluir e consultar registros manualmente nas tabelas sem erro.
-  ( ) Índices permitem DBSeek rápido (testar busca por código e por chaves compostas).
-  (x) Consulta padrão retorna registros esperados e será reutilizável nos cadastros.
-  ( ) Parâmetros e gatilhos estão ativos e impedem dados inválidos.
-
-  DbHeaver - Acesser de BD
+( ) CRUD Cantor (ZZC): incluir/alterar/excluir lógico/listar.
+( ) CRUD Álbum (ZZA): obrigar cantor existente (buscar em ZZC antes de gravar).
+( ) Regras: impedir duplicidade de código; impedir álbum sem cantor; aplicar gênero padrão
+     MV_GENPAD se vazio.
+( ) Locks: usar RecLock()/MsUnlock() ou equivalentes para garantir integridade.
+( ) Mensagens: tratar erros com aviso ao usuário sem deixar travar

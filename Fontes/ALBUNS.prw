@@ -29,6 +29,20 @@ Static Function MenuDef()
     ADD OPTION aRotina TITLE "Excluir" ACTION "VIEWDEF.ALBUNS" OPERATION 5 ACCESS 0
 Return aRotina
 
+//Reclok
+Static Function fRecklok()
+   Local nOperation := oModel:GetOperation()
+  
+   if nOperation == MODEL_OPERATION_INSERT .or. nOperation == MODEL_OPERATION_UPDATE
+        DbSelectArea('ZZA')
+        RecLok("ZZA", .T.)
+        MsgAlert("Reclok ativado")
+        MsUnlock()
+        MsgAlert("Reclok destravado")
+    endif
+   
+Return
+
 //ModelDef
 Static Function ModelDef()
   Local oStruct := FWFormStruct(1, cAliasMVC)
@@ -136,6 +150,6 @@ Return lExist
 Static Function ShowError(oModel)
     oModel:setErrorMessage(,,, , ,;
         "Duplicidade Detectada",;
-        "Este registro (Título/Álbum ou Código) já existe no sistema.",;
+        "Este registro (Título/Ýlbum ou Código) já existe no sistema.",;
         "Por favor, verifique os dados antes de salvar.", , , )
 Return .F.
