@@ -9,9 +9,9 @@ Ex:
  Sem cantor em ZZC não é possivel registrar um Album 
 
 CheckList
-  ( ) Consegue incluir e consultar registros manualmente nas tabelas sem erro.
+  (x) Consegue incluir e consultar registros manualmente nas tabelas sem erro.
   ( ) Índices permitem DBSeek rápido (testar busca por código e por chaves compostas).
-  ( ) Consulta padrão retorna registros esperados e será reutilizável nos cadastros.
+  (x) Consulta padrão retorna registros esperados e será reutilizável nos cadastros.
   ( ) Parâmetros e gatilhos estão ativos e impedem dados inválidos.
 
   DbHeaver - Acesser de BD
