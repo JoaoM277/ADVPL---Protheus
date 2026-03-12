@@ -163,3 +163,8 @@ User Function u_DBseek()
 
   RestArea(aArea)
 Return
+
+
+//MsGBox
+MsgBox("Parametro 1", "Parametro 2",   "Parametro 3")
+      //Conteudo      Titulo da caixa    Tipo da msg

@@ -1,6 +1,2 @@
-( ) CRUD Cantor (ZZC): incluir/alterar/excluir lógico/listar.
-( ) CRUD Álbum (ZZA): obrigar cantor existente (buscar em ZZC antes de gravar).
-( ) Regras: impedir duplicidade de código; impedir álbum sem cantor; aplicar gênero padrão
-     MV_GENPAD se vazio.
-( ) Locks: usar RecLock()/MsUnlock() ou equivalentes para garantir integridade.
-( ) Mensagens: tratar erros com aviso ao usuário sem deixar travar
+( ) Incluir indice em ZZC com ZZC_FILIAL e ZZC_NOME
+( ) Completar MsgBoxers

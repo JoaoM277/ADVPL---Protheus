@@ -1,4 +1,4 @@
 {
     "totvsLanguageServer.welcomePage": false,
-    "totvsLanguageServer.editor.linter.includes": "C:\\Users\\estagio\\Desktop\\JM dockers\\include_totvs\\include_totvs"
+    "totvsLanguageServer.editor.linter.includes": "C:\\dev\\include_totvs"
 }

@@ -29,19 +29,6 @@ Static Function MenuDef()
     ADD OPTION aRotina TITLE "Excluir" ACTION "VIEWDEF.ALBUNS" OPERATION 5 ACCESS 0
 Return aRotina
 
-//Reclok
-Static Function fRecklok()
-   Local nOperation := oModel:GetOperation()
-  
-   if nOperation == MODEL_OPERATION_INSERT .or. nOperation == MODEL_OPERATION_UPDATE
-        DbSelectArea('ZZA')
-        RecLok("ZZA", .T.)
-        MsgAlert("Reclok ativado")
-        MsUnlock()
-        MsgAlert("Reclok destravado")
-    endif
-   
-Return
 
 //ModelDef
 Static Function ModelDef()
@@ -107,6 +94,10 @@ Static Function fCommit(oModel)
          lRet :=FWFormCommit(oModel)
          End Transaction
       endif
+
+       if nOperation == MODEL_OPERATION_UPDATE
+         MsgYesNo("Tem certeza que deseja alterar o registro atual?", "Confirmação")
+       endif
 
     endif
 Return lRet

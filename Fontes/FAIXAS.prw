@@ -65,6 +65,7 @@ Return oView
 
 //Função de Validação de 1 Faixa por Album
 Static Function fCommit(oModel)
+
     Local nOperation := oModel:GetOperation()
     Local lRet       := .T.
     Local cDesc      := oModel:GetValue("MASTER","ZZM_NOME") //Busca a descrição na tabela
@@ -83,8 +84,14 @@ Static Function fCommit(oModel)
          End Transaction
       endif
 
+        if nOperation == MODEL_OPERATION_UPDATE
+         MsgYesNo("Tem certeza que deseja alterar o registro atual?", "Confirmação")
+        endif
+  
     endif
+
 Return lRet
+
 //2 - Função Principal
 Static Function Valida(nOperation,nRecAtual,cDesc, cAlbCod,cCod)
     Local lExist := .F.
