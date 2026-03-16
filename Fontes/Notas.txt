@@ -1,3 +1,7 @@
 ( ) Tela mostra músicas do álbum corretamente.
 
+(x) cadastros e inclusões ok
+( ) Logica de vinculação de produtos x Albuns
+( ) Correções gerais
+
 Inicia-se os relatorios
