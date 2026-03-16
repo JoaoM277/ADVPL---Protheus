@@ -168,3 +168,17 @@ Return
 //MsGBox
 MsgBox("Parametro 1", "Parametro 2",   "Parametro 3")
       //Conteudo      Titulo da caixa    Tipo da msg
+
+Static Function fCommit(oModel)
+    Local nOperation := oModel:GetOperation()
+    Local lRet       := ""
+
+    if nOperation == MODEL_OPERATION_INSERT .or. nOperation == MODEL_OPERATION_UPDATE 
+       if nOperation == MODEL_OPERATION_UPDATE
+         lRet := MsgYesNo("Tem certeza que deseja alterar o registro atual?", "Confirmação")
+       endif
+
+    endif
+Return lRet
+
+oMOdel:GetModel("MASTER"):SetErrorMessage("Campo vinculado","Codigo do erro","Titulo do erro","Conteudo da mensagem","Solução")

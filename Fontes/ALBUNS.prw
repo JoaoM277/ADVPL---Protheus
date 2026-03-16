@@ -63,19 +63,6 @@ Static Function ViewDef()
 
 Return oView
 
-//Função para Commit
-/*/{Protheus.doc} fCommit
-    (long_description)
-    @type  Static Function
-    @author user
-    @since 05/03/2026
-    @version version
-    @param oModel, param_type, param_descr
-    @return return_var, return_type, return_description
-    @example
-    (examples)
-    @see (links_or_references)
-/*/
 Static Function fCommit(oModel)
     Local nOperation := oModel:GetOperation()
     Local lRet       := .T.
@@ -102,18 +89,6 @@ Static Function fCommit(oModel)
     endif
 Return lRet
 
-/*/{Protheus.doc} Valida
-    (long_description)
-    @type  Static Function
-    @author user
-    @since 05/03/2026
-    @version version
-    @param nOperation,nRecAtual,cDesc,cArtCod,cCod, param_type, param_descr
-    @return return_var, return_type, return_description
-    @example
-    (examples)
-    @see (links_or_references)
-/*/
 Static Function Valida(nOperation,nRecAtual,cDesc,cArtCod,cCod)
     Local lExist := .F.
     Local aArea  := ZZA->(GetArea())
@@ -126,18 +101,6 @@ Static Function Valida(nOperation,nRecAtual,cDesc,cArtCod,cCod)
     endif
 Return lExist
 
-/*/{Protheus.doc} ShowError
-    (long_description)
-    @type  Static Function
-    @author user
-    @since 05/03/2026
-    @version version
-    @param oModel, param_type, param_descr
-    @return return_var, return_type, return_description
-    @example
-    (examples)
-    @see (links_or_references)
-/*/
 Static Function ShowError(oModel)
     oModel:setErrorMessage(,,, , ,;
         "Duplicidade Detectada",;

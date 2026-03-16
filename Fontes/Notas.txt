@@ -1,2 +1,3 @@
-( ) Incluir indice em ZZC com ZZC_FILIAL e ZZC_NOME
-( ) Completar MsgBoxers
+( ) Tela mostra músicas do álbum corretamente.
+
+Inicia-se os relatorios
