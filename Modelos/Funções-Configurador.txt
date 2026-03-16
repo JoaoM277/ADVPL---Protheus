@@ -8,3 +8,5 @@ Auto preenchimento de descrição - (alias da descrição)->(campo da descriçã
 
 ZZA_ARTCOD, ZZA_NMC
 ZZA_GN, ZZA_GNDES
+
+Pegar o Indice 3 da tabela SB1

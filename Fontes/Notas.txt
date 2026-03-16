@@ -3,5 +3,6 @@
 (x) cadastros e inclusões ok
 ( ) Logica de vinculação de produtos x Albuns
 ( ) Correções gerais
+( )concertar registro d ecantores
 
 Inicia-se os relatorios
